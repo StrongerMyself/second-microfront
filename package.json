@@ -1,0 +1,17 @@
+{
+  "name": "web-setup",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "bootstrap": "lerna run clean && lerna bootstrap --use-workspaces",
+    "ls": "lerna ls",
+    "dev": "lerna run dev --parallel --stream",
+    "build": "lerna run build --parallel --stream"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.16.4"
+  }
+}

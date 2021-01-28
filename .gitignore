@@ -1,0 +1,13 @@
+node_modules
+assets
+dist
+.history
+.env
+.awcache
+.cache
+.idea
+*.log
+*.lock
+*.lock.yaml
+package-lock.json
+_vimrc_local.vim
