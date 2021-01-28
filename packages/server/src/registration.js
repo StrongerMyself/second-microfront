@@ -8,8 +8,14 @@ module.exports = (app) => (name, _pathPackage) => {
   const manifest = require(pathManifest)
   const pathComponent = path.resolve(pathPackage, manifest['server.js'])
   const component = require(pathComponent)
-  app.use(`/render/${name}`, rerender(name, manifest, component))
-  Object.keys(manifest).map(keyFile => {
-    app.use(`/static/${name}/${manifest[keyFile]}`, express.static(path.resolve(pathPackage, manifest[keyFile])))
-  })
+  const manifestStatic = Object.keys(manifest).map(keyFile => {
+    const pathStatic = `/static/${name}/${manifest[keyFile]}`
+    const pathFile = path.resolve(pathPackage, manifest[keyFile])
+    app.use(pathStatic, express.static(pathFile))
+    return [keyFile, pathStatic]
+  }).reduce((acc, [key, value]) => {
+    acc[key] = value
+    return acc
+  }, {})
+  app.use(`/render/${name}`, rerender(name, manifestStatic, component))
 }

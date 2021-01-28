@@ -88,8 +88,8 @@ const clientConfig = {
     }),
   ],
   externals: [
-    'react',
-    'react-dom',
+    // 'react',
+    // 'react-dom',
   ],
   resolve,
   module: { rules },
