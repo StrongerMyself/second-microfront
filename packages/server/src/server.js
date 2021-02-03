@@ -11,13 +11,13 @@ app.use(cookieParser())
 const registerApp = (name, dist, entry) => {
   const manifest = require(`${dist}/manifest.json`)
   const component = require(`${dist}/${manifest[entry]}`)
-  const publicManifest = registerStatic(name, dist, manifest)
+  const publicManifest = registerStatic(name, dist, entry, manifest)
   app.use(`/render/${name}`, renderApp(name, publicManifest, component))
 }
 
-const registerStatic = (name, dist, manifest) => {
+const registerStatic = (name, dist, entry, manifest) => {
   return Object.keys(manifest)
-    .filter(key => key.indexOf('server') !== 0)
+    .filter(key => key !== entry)
     .reduce((acum, key) => {
       const routeStatic = `/static/${name}/${manifest[key]}`
       const pathFile = path.resolve(__dirname, dist, manifest[key])
