@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Second-Microfront</title>
+  <link rel="stylesheet" href="{{ catalogFilters.manifest.[client.css] }}">
 </head>
 <body>
   <h2>Catalog</h2>
@@ -13,9 +14,10 @@
   </nav>
   <br>
   <div class="page">
-    <div id="catalog-filters">{{{ catalogFilters }}}</div>
+    <div id="catalog-filters">{{{ catalogFilters.markup }}}</div>
     <div id="catalog-cards">catalog-cards</div>
     <div id="cart">cart</div>
   </div>
+  <script src="{{ catalogFilters.manifest.[client.js] }}"></script>
 </body>
 </html>

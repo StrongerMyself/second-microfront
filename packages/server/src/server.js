@@ -8,17 +8,23 @@ const app = express()
 app.disable('x-powered-by')
 app.use(cookieParser())
 
-const registerApp = (name, pathApp) => {
-  const manifest = require(`${pathApp}/dist/manifest.json`)
-  const component = require(`${pathApp}/dist/${manifest['server.js']}`)
-  app.use(`/render/${name}`, renderApp(name, manifest, component))
-  Object.keys(manifest)
+const registerApp = (name, dist, entry) => {
+  const manifest = require(`${dist}/manifest.json`)
+  const component = require(`${dist}/${manifest[entry]}`)
+  const publicManifest = registerStatic(name, dist, manifest)
+  app.use(`/render/${name}`, renderApp(name, publicManifest, component))
+}
+
+const registerStatic = (name, dist, manifest) => {
+  return Object.keys(manifest)
     .filter(key => key.indexOf('server') !== 0)
-    .map((key) => {
+    .reduce((acum, key) => {
       const routeStatic = `/static/${name}/${manifest[key]}`
-      const pathFile = path.resolve(pathApp, manifest[key])
+      const pathFile = path.resolve(__dirname, dist, manifest[key])
       app.use(routeStatic, express.static(pathFile))
-    })
+      acum[key] = routeStatic
+      return acum
+    }, {})
 }
 
 const renderApp = (name, manifest, component) => async (req, res) => {
@@ -26,10 +32,9 @@ const renderApp = (name, manifest, component) => async (req, res) => {
   res.json({ name, markup, manifest })
 }
 
-registerApp('catalog-filters', '../../../packages/catalog-filters')
+registerApp('catalog-filters', '../../../packages/catalog-filters/dist', 'server.js')
 
 const PORT = process.env.SERVER_PORT || 3001
-
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`)
 })
