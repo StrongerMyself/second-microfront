@@ -3,11 +3,11 @@ import { render, hydrate } from 'react-dom'
 
 import './index.css'
 
-import { AppFilters } from './AppFilters'
+import { CatalogFilters } from './CatalogFilters'
 
-const id = 'app-filters'
+const id = 'catalog-filters'
 const element = document.getElementById(id)
-const component = createElement(AppFilters)
+const component = createElement(CatalogFilters)
 
 if (element) {
   if (element.hasChildNodes()) {
