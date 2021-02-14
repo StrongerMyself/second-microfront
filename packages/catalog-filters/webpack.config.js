@@ -3,14 +3,19 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals')
+
+const packageJson = require('./package.json') 
 
 const PATH_DIST = path.resolve(__dirname, 'dist')
 rimraf.sync(PATH_DIST)
 console.log('Clean dist: ', PATH_DIST)
 
+const publicPath = `/static/${packageJson.name}`
+
 const seedManifest = {}
 const manifestPlugin = new WebpackManifestPlugin({
+  publicPath: '',
   seed: seedManifest,
 })
 
@@ -47,14 +52,13 @@ const minimizer = [
   new TerserPlugin({ extractComments: false })
 ]
 
-
 const serverConfig = {
   target: 'node',
   entry: {
     server: './src/index.ts'
   },
   output: {
-    publicPath: '',
+    publicPath,
     path: PATH_DIST,
     filename: '[name].[contenthash].js',
     libraryTarget: 'commonjs2',
@@ -65,6 +69,8 @@ const serverConfig = {
   ],
   externals: [
     nodeExternals(),
+    'react',
+    'react-dom',
   ],
   resolve,
   module: { rules },
@@ -77,7 +83,7 @@ const clientConfig = {
     client: './src/client.ts'
   },
   output: {
-    publicPath: '',
+    publicPath,
     path: PATH_DIST,
     filename: '[name].[contenthash].js'
   },
@@ -87,10 +93,10 @@ const clientConfig = {
       filename: '[name].[contenthash].css',
     }),
   ],
-  externals: [
-    // 'react',
-    // 'react-dom',
-  ],
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  },
   resolve,
   module: { rules },
   optimization: { minimizer },

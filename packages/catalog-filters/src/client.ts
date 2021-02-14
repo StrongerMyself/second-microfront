@@ -1,4 +1,4 @@
-import { createElement } from 'react'
+import React from 'react'
 import { render, hydrate } from 'react-dom'
 
 import './index.css'
@@ -7,7 +7,7 @@ import { CatalogFilters } from './CatalogFilters'
 
 const id = 'catalog-filters'
 const element = document.getElementById(id)
-const component = createElement(CatalogFilters)
+const component = React.createElement(CatalogFilters)
 
 if (element) {
   if (element.hasChildNodes()) {
@@ -16,4 +16,3 @@ if (element) {
       render(component, element, () => console.log('render: ', id))
   }
 }
-

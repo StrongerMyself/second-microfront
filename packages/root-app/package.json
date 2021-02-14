@@ -5,7 +5,12 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./src/server",
-    "dev": "nodemon ./src/server"
+    "dev": "nodemon ./src/server",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "cookie-parser": "^1.4.5",
@@ -13,6 +18,11 @@
     "express-http-proxy": "^1.6.2",
     "express-static-proxy": "^1.0.0",
     "hbs": "^4.1.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "rimraf": "^3.0.2",
+    "terser-webpack-plugin": "^5.1.1",
+    "webpack": "^5.21.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-manifest-plugin": "^3.0.0"
   }
 }

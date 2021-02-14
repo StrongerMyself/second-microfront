@@ -10,31 +10,29 @@ app.use(cookieParser())
 
 const registerApp = (name, dist, entry) => {
   const manifest = require(`${dist}/manifest.json`)
-  const component = require(`${dist}/${manifest[entry]}`)
-  const publicManifest = registerStatic(name, dist, entry, manifest)
-  app.use(`/render/${name}`, renderApp(name, publicManifest, component))
+  const serverComponent = require(`${dist}/${manifest[entry]}`)
+  const pathDist = path.resolve(__dirname, dist)
+  app.use(`/static/${name}`, express.static(pathDist))
+  app.use(`/render/${name}`, renderApp(name, manifest, serverComponent))
 }
 
-const registerStatic = (name, dist, entry, manifest) => {
+const getPublicStatic = (name, manifest) => {
   return Object.keys(manifest)
-    .filter(key => key !== entry)
     .reduce((acum, key) => {
-      const routeStatic = `/static/${name}/${manifest[key]}`
-      const pathFile = path.resolve(__dirname, dist, manifest[key])
-      app.use(routeStatic, express.static(pathFile))
-      acum[key] = routeStatic
+      acum[key] = `/static/${name}/${manifest[key]}`
       return acum
     }, {})
 }
 
-const renderApp = (name, manifest, component) => async (req, res) => {
-  const markup = ReactDOM.renderToString(React.createElement(component))
-  res.json({ name, markup, manifest })
+const renderApp = (name, manifest, serverComponent) => async (req, res) => {
+  const publicManifest = getPublicStatic(name, manifest)
+  const markup = ReactDOM.renderToString(React.createElement(serverComponent))
+  res.json({ name, markup, manifest: publicManifest })
 }
 
 registerApp('catalog-filters', '../../../packages/catalog-filters/dist', 'server.js')
 
 const PORT = process.env.SERVER_PORT || 3001
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}...`)
+  console.log(`BFF listen on port ${PORT}...`)
 })

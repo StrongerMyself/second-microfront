@@ -9,6 +9,7 @@ app.use(cookieParser())
 
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'))
+app.use('/dist', express.static(`${__dirname}/../dist`))
 
 app.use('/static', staticProxy({
   target: {
@@ -28,5 +29,5 @@ app.get('*', require('./controllers/not-found'))
 
 const port = process.env.SERVER_PORT || 3000
 app.listen(port, () => {
-  console.log(`Listening on port ${port}...`)
+  console.log(`RootApp listen on port ${port}...`)
 })
