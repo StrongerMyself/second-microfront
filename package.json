@@ -2,7 +2,14 @@
   "name": "web-setup",
   "private": true,
   "version": "1.0.0",
+  "scripts": {
+    "dev": "wsrun -p server root-app -r dev",
+    "build": "wsrun -r build"
+  },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "wsrun": "^5.2.4"
+  }
 }

@@ -1,8 +1,6 @@
 const path = require('path')
 const express = require('express')
 const cookieParser = require('cookie-parser')
-const React = require('react')
-const ReactDOM = require('react-dom/server')
 
 const app = express()
 app.disable('x-powered-by')
@@ -10,10 +8,10 @@ app.use(cookieParser())
 
 const registerApp = (name, dist, entry) => {
   const manifest = require(`${dist}/manifest.json`)
-  const serverComponent = require(`${dist}/${manifest[entry]}`)
+  const renderApp = require(`${dist}/${manifest[entry]}`)
   const pathDist = path.resolve(__dirname, dist)
   app.use(`/static/${name}`, express.static(pathDist))
-  app.use(`/render/${name}`, renderApp(name, manifest, serverComponent))
+  app.use(`/render/${name}`, controllerApp(name, manifest, renderApp))
 }
 
 const getPublicStatic = (name, manifest) => {
@@ -24,9 +22,9 @@ const getPublicStatic = (name, manifest) => {
     }, {})
 }
 
-const renderApp = (name, manifest, serverComponent) => async (req, res) => {
+const controllerApp = (name, manifest, renderApp) => async (req, res) => {
   const publicManifest = getPublicStatic(name, manifest)
-  const markup = ReactDOM.renderToString(React.createElement(serverComponent))
+  const markup = await renderApp()
   res.json({ name, markup, manifest: publicManifest })
 }
 

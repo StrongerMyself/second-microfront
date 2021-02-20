@@ -55,7 +55,7 @@ const minimizer = [
 const serverConfig = {
   target: 'node',
   entry: {
-    server: './src/index.ts'
+    server: './src/server.ts'
   },
   output: {
     publicPath,
@@ -69,8 +69,6 @@ const serverConfig = {
   ],
   externals: [
     nodeExternals(),
-    'react',
-    'react-dom',
   ],
   resolve,
   module: { rules },
