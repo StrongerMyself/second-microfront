@@ -1,10 +1,8 @@
-import React from 'react'
 import ReactDOM from 'react-dom/server'
-import { CatalogFilters } from './CatalogFilters'
+import { createApp } from './main'
  
 export default async () => {
-  const markup = ReactDOM.renderToString(
-    React.createElement(CatalogFilters)
-  )
-  return markup
+  const { ID, app } = createApp()
+  const markup = ReactDOM.renderToString(app)
+  return { ID, markup }
 }

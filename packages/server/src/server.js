@@ -24,8 +24,8 @@ const getPublicStatic = (name, manifest) => {
 
 const controllerApp = (name, manifest, renderApp) => async (req, res) => {
   const publicManifest = getPublicStatic(name, manifest)
-  const markup = await renderApp()
-  res.json({ name, markup, manifest: publicManifest })
+  const { ID, markup } = await renderApp()
+  res.json({ ID, name, markup, manifest: publicManifest })
 }
 
 registerApp('catalog-filters', '../../../packages/catalog-filters/dist', 'server.js')

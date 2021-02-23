@@ -10,6 +10,6 @@ const fetchApp = (name) => {
 module.exports = async (req, res) => {
   const catalogFilters = await fetchApp(`catalog-filters`)
   res.render('catalog', {
-    catalogFilters
+    catalogFilters,
   })
 }

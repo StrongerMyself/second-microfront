@@ -1,18 +1,15 @@
-import React from 'react'
 import { render, hydrate } from 'react-dom'
+import { createApp } from './main'
 
 import './index.css'
 
-import { CatalogFilters } from './CatalogFilters'
-
-const id = 'catalog-filters'
-const element = document.getElementById(id)
-const component = React.createElement(CatalogFilters)
+const { ID, app } = createApp()
+const element = document.getElementById(ID)
 
 if (element) {
   if (element.hasChildNodes()) {
-      hydrate(component, element, () => console.log('hydrate: ', id))
+      hydrate(app, element, () => console.log('hydrate: ', ID))
   } else {
-      render(component, element, () => console.log('render: ', id))
+      render(app, element, () => console.log('render: ', ID))
   }
 }
