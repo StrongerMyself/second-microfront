@@ -8,8 +8,18 @@ const fetchApp = (name) => {
 }
 
 module.exports = async (req, res) => {
+  const header = await fetchApp('header')
+  const filters = await fetchApp('filters')
+  const catalog = await fetchApp('catalog')
+  const cart = await fetchApp('cart')
+  const footer = await fetchApp('footer')
   const catalogFilters = await fetchApp(`catalog-filters`)
   res.render('catalog', {
+    header,
+    filters,
+    catalog,
+    cart,
+    footer,
     catalogFilters,
   })
 }

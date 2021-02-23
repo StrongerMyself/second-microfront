@@ -28,6 +28,11 @@ const controllerApp = (name, manifest, renderApp) => async (req, res) => {
   res.json({ ID, name, markup, manifest: publicManifest })
 }
 
+registerApp('header', '../../../packages/apps/header/dist', 'server.js')
+registerApp('filters', '../../../packages/apps/filters/dist', 'server.js')
+registerApp('catalog', '../../../packages/apps/catalog/dist', 'server.js')
+registerApp('cart', '../../../packages/apps/cart/dist', 'server.js')
+registerApp('footer', '../../../packages/apps/footer/dist', 'server.js')
 registerApp('catalog-filters', '../../../packages/catalog-filters/dist', 'server.js')
 
 const PORT = process.env.SERVER_PORT || 3001

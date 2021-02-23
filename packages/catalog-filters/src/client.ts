@@ -1,7 +1,6 @@
 import { render, hydrate } from 'react-dom'
 import { createApp } from './main'
-
-import './index.css'
+import './style.css'
 
 const { ID, app } = createApp()
 const element = document.getElementById(ID)

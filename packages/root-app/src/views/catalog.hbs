@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Second-Microfront</title>
+  <link rel="stylesheet" href="{{ header.manifest.[client.css] }}">
+  <link rel="stylesheet" href="{{ filters.manifest.[client.css] }}">
+  <link rel="stylesheet" href="{{ catalog.manifest.[client.css] }}">
+  <link rel="stylesheet" href="{{ cart.manifest.[client.css] }}">
+  <link rel="stylesheet" href="{{ footer.manifest.[client.css] }}">
   <link rel="stylesheet" href="{{ catalogFilters.manifest.[client.css] }}">
 </head>
 <body>
@@ -14,11 +19,21 @@
   </nav>
   <br>
   <div class="page">
+    {{{ header.markup }}}
+    {{{ filters.markup }}}
+    {{{ catalog.markup }}}
+    {{{ cart.markup }}}
+    {{{ footer.markup }}}
     <div id="{{ catalogFilters.ID }}">{{{ catalogFilters.markup }}}</div>
     <div id="catalog-cards">catalog-cards</div>
     <div id="cart">cart</div>
   </div>
   <script src="/dist/vendor.js"></script>
+  <script src="{{ header.manifest.[client.js] }}"></script>
+  <script src="{{ filters.manifest.[client.js] }}"></script>
+  <script src="{{ catalog.manifest.[client.js] }}"></script>
+  <script src="{{ cart.manifest.[client.js] }}"></script>
+  <script src="{{ footer.manifest.[client.js] }}"></script>
   <script src="{{ catalogFilters.manifest.[client.js] }}"></script>
 </body>
 </html>
