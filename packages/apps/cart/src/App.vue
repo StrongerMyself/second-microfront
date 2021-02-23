@@ -1,5 +1,5 @@
 <template>
-  <div class="cart">cart</div>
+  <div class="cart">Cart</div>
 </template>
 
 <style scoped>
@@ -10,7 +10,7 @@
     text-align: center;
     font-size: 20px;
     width: 100%;
-    height: 100px;
+    height: 100%;
     border: 1px solid #333;
   }
 </style>

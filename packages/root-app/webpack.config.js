@@ -1,6 +1,6 @@
 const rimraf = require('rimraf')
 const path = require('path')
-// const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 const PATH_DIST = path.resolve(__dirname, 'dist')
@@ -10,16 +10,31 @@ console.log('Clean dist: ', PATH_DIST)
 const venderConfig = {
   target: 'web',
   entry: {
-    vendor: './src/scripts/vendor.js'
+    main: './src/scripts/main.js',
+    vendor: './src/scripts/vendor.js',
   },
   output: {
     publicPath: '',
     path: PATH_DIST,
     filename: '[name].js'
-    // filename: '[name].[contenthash].js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+    ],
   },
   plugins: [
-    // new WebpackManifestPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
   ],
   optimization: {
     minimizer: [
